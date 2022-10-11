@@ -1,15 +1,18 @@
 import "./css/reset.css";
 import "./css/style.css";
-// import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
 import Canvas from "./components/Canvas";
 import UtilBtn from "./components/UtilBtn";
+import store from "./store";
 
 function App() {
   return (
-    <div className="App">
-      <Canvas />
-      <UtilBtn />
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <Canvas />
+        <UtilBtn />
+      </div>
+    </Provider>
   );
 }
 
