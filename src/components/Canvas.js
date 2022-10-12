@@ -37,7 +37,6 @@ const Canvas = () => {
   });
 
   // 모드와 색이 바뀔 때 마다 canvas의 배경, 펜 색 바뀌게하는 함수
-  // canvas의 backgroundColor를 바꾸는 걸로 했었는데 배경색이 다운이 안되서 fillStyle로 변경 -> 배경을 바꿀 때 마다 리셋되는 문제 있음
   useEffect(() => {
     if (getMode === "Fill") {
       ctx.fillStyle = fillColor;
@@ -78,6 +77,8 @@ const Canvas = () => {
     if (getReset) {
       ctx.clearRect(0, 0, 700, 700);
       dispatch(reset(false));
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(0, 0, 700, 700);
     }
   }, [getReset]);
 
