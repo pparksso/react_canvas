@@ -6,10 +6,14 @@ import { modeChoice } from "../slices/modeSlice";
 const UtilBtn = () => {
   const dispatch = useDispatch();
   const [mode, setMode] = useState("Paint");
+
+  // 클릭 시 mode 바꾸는 함수
   const changeMode = () => {
     mode === "Paint" ? setMode("Fill") : setMode("Paint");
     return mode;
   };
+
+  // 바뀐 함수 값 redux로 보내기
   useEffect(() => {
     dispatch(modeChoice(mode));
   }, [mode]);
