@@ -24,7 +24,7 @@ const UtilBtn = () => {
   // 바뀐 함수 값 redux로 보내기(useState가 비동기로 작동해 mode가 비뀌고 나서 전송되게 하기위해 useEffect 사용)
   useEffect(() => {
     dispatch(modeChoice(mode));
-  }, [mode]);
+  }, [mode, dispatch]);
 
   // 선 굵기 값 변경
   const lineWidth = (e) => {
@@ -34,7 +34,7 @@ const UtilBtn = () => {
   // 선 굵기 값 리듀서 저장
   useEffect(() => {
     dispatch(changeRange(value));
-  }, [value]);
+  }, [value, dispatch]);
   return (
     <div className="controls">
       <div className="controls__range">

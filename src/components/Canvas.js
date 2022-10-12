@@ -44,7 +44,7 @@ const Canvas = () => {
     } else {
       setPenColor(fillColor);
     }
-  }, [getMode, fillColor]);
+  }, [getMode, fillColor, ctx]);
 
   // canvas 기본 세팅
   useEffect(() => {
@@ -80,7 +80,7 @@ const Canvas = () => {
       ctx.fillStyle = "#fff";
       ctx.fillRect(0, 0, 700, 700);
     }
-  }, [getReset]);
+  }, [getReset, ctx, dispatch]);
 
   return (
     <div className="canvas-wrap">
