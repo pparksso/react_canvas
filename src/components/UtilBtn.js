@@ -3,10 +3,12 @@ import Colors from "./Colors";
 import { useDispatch, useSelector } from "react-redux";
 import { modeChoice } from "../slices/modeSlice";
 import { reset } from "../slices/resetSlice";
+import { changeRange } from "../slices/rangeSlice";
 
 const UtilBtn = () => {
   const dispatch = useDispatch();
   const [mode, setMode] = useState("Paint");
+  const [value, setValue] = useState(3.5);
 
   // canvas url
   const url = useSelector((state) => {
@@ -24,10 +26,19 @@ const UtilBtn = () => {
     dispatch(modeChoice(mode));
   }, [mode]);
 
+  // 선 굵기 값 변경
+  const lineWidth = (e) => {
+    setValue(e.target.value);
+  };
+
+  // 선 굵기 값 리듀서 저장
+  useEffect(() => {
+    dispatch(changeRange(value));
+  }, [value]);
   return (
     <div className="controls">
       <div className="controls__range">
-        <input type="range" id="jsRange" min="0.5" max="6.5" value="3.5" step="0.1" />
+        <input type="range" id="jsRange" min="0.5" max="6.5" value={value} step="0.1" onChange={lineWidth} />
       </div>
       <div className="controls__btns">
         <button

@@ -3,6 +3,7 @@ import colorSlice from "./slices/colorSlice";
 import modeSlice from "./slices/modeSlice";
 import resetSlice from "./slices/resetSlice";
 import downSlice from "./slices/downSlice";
+import rangeSlice from "./slices/rangeSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     mode: modeSlice.reducer,
     reset: resetSlice.reducer,
     down: downSlice.reducer,
+    range: rangeSlice.reducer,
   },
 });
 export default store;

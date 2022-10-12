@@ -10,7 +10,9 @@ const Canvas = () => {
   const [pencil, setPencil] = useState(false);
   const [penColor, setPenColor] = useState("#000");
   const [ctx, setCtx] = useState(null);
-
+  const range = useSelector((state) => {
+    return state.range.value;
+  });
   // 색 가져오기
   const fillColor = useSelector((state) => {
     return state.color.color;
@@ -50,14 +52,17 @@ const Canvas = () => {
     const canvas = canvasRef.current;
     canvas.width = 700;
     canvas.height = 700;
-    setCtx(canvas.getContext("2d"));
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, 700, 700);
+    setCtx(ctx);
   }, []);
 
   // canvas에 그림그리는 함수
   const draw = (e) => {
     const X = e.nativeEvent.offsetX;
     const Y = e.nativeEvent.offsetY;
-    ctx.lineWidth = 1;
+    ctx.lineWidth = range;
     ctx.strokeStyle = penColor;
     if (!pencil) {
       ctx.beginPath();
