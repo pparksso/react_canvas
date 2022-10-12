@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Colors from "./Colors";
 import { useDispatch } from "react-redux";
 import { modeChoice } from "../slices/modeSlice";
+import { reset } from "../slices/resetSlice";
 
 const UtilBtn = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const UtilBtn = () => {
     return mode;
   };
 
-  // 바뀐 함수 값 redux로 보내기
+  // 바뀐 함수 값 redux로 보내기(useState가 비동기로 작동해 mode가 비뀌고 나서 전송되게 하기위해 useEffect 사용)
   useEffect(() => {
     dispatch(modeChoice(mode));
   }, [mode]);
@@ -32,7 +33,14 @@ const UtilBtn = () => {
           {mode}
         </button>
         <button id="jsSave">Save</button>
-        <button id="jsReset">Reset</button>
+        <button
+          id="jsReset"
+          onClick={() => {
+            dispatch(reset(true));
+          }}
+        >
+          Reset
+        </button>
       </div>
       <Colors />
     </div>
