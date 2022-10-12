@@ -9,5 +9,6 @@ const colorSlice = createSlice({
     },
   },
 });
+
 export default colorSlice;
 export const { colorChoice } = colorSlice.actions;

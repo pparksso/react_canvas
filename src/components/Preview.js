@@ -10,10 +10,13 @@ const Preview = () => {
       return "#2C2C2C";
     }
   });
+  const mode = useSelector((state) => {
+    return state.mode.mode;
+  });
   return (
     <div className="status__box">
       <div id="color__status" className="color__preview" style={{ backgroundColor: color, color: textColor }}>
-        PAINT
+        {mode}
       </div>
       <canvas id="line__canvas" className="line__status"></canvas>
     </div>
