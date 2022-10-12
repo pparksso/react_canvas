@@ -5,7 +5,6 @@ const resetSlice = createSlice({
   initialState: { reset: false },
   reducers: {
     reset: (state, action) => {
-      // console.log(action.payload);
       state.reset = action.payload;
     },
   },

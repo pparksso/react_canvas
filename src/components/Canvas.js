@@ -2,15 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Preview from "./Preview";
 import { reset } from "../slices/resetSlice";
+import { canvasUrl, saveImg } from "../slices/downSlice";
 
 const Canvas = () => {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
   const [pencil, setPencil] = useState(false);
-  const [bg, setBg] = useState("#fff");
   const [penColor, setPenColor] = useState("#000");
   const [ctx, setCtx] = useState(null);
-  const [clear, setClear] = useState(false);
 
   // 색 가져오기
   const fillColor = useSelector((state) => {
@@ -27,15 +26,20 @@ const Canvas = () => {
     return state.reset.reset;
   });
 
-  // 클릭이벤트 다시 false로 만들기
+  // canvas 주소 보내기
   useEffect(() => {
-    dispatch(reset(false));
-  }, [clear]);
+    if (saveImg) {
+      dispatch(canvasUrl(canvasRef.current.toDataURL("image/png")));
+      dispatch(saveImg(false));
+    }
+  });
 
   // 모드와 색이 바뀔 때 마다 canvas의 배경, 펜 색 바뀌게하는 함수
+  // canvas의 backgroundColor를 바꾸는 걸로 했었는데 배경색이 다운이 안되서 fillStyle로 변경 -> 배경을 바꿀 때 마다 리셋되는 문제 있음
   useEffect(() => {
     if (getMode === "Fill") {
-      setBg(fillColor);
+      ctx.fillStyle = fillColor;
+      ctx.fillRect(0, 0, 700, 700);
     } else {
       setPenColor(fillColor);
     }
@@ -64,28 +68,17 @@ const Canvas = () => {
     }
   };
 
-  // 캔버스 reset(clearRect()가 안되서 캔버스를 새로 생성)
+  // 캔버스 reset
   useEffect(() => {
-    setClear(getReset);
-    const canvas = canvasRef.current;
-    canvas.width = 700;
-    canvas.height = 700;
-    setCtx(canvas.getContext("2d"));
-    setBg("#fff");
+    if (getReset) {
+      ctx.clearRect(0, 0, 700, 700);
+      dispatch(reset(false));
+    }
   }, [getReset]);
 
   return (
     <div className="canvas-wrap">
-      <canvas
-        id="jsCanvas"
-        className="canvas"
-        ref={canvasRef}
-        style={{ backgroundColor: bg }}
-        onMouseDown={() => setPencil(true)}
-        onMouseUp={() => setPencil(false)}
-        onMouseMove={draw}
-        onMouseLeave={() => setPencil(false)}
-      ></canvas>
+      <canvas id="jsCanvas" className="canvas" ref={canvasRef} onMouseDown={() => setPencil(true)} onMouseUp={() => setPencil(false)} onMouseMove={draw} onMouseLeave={() => setPencil(false)}></canvas>
       <Preview />
     </div>
   );

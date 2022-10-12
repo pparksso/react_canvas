@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Colors from "./Colors";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { modeChoice } from "../slices/modeSlice";
 import { reset } from "../slices/resetSlice";
 
 const UtilBtn = () => {
   const dispatch = useDispatch();
   const [mode, setMode] = useState("Paint");
+
+  // canvas url
+  const url = useSelector((state) => {
+    return state.down.url;
+  });
 
   // 클릭 시 mode 바꾸는 함수
   const changeMode = () => {
@@ -18,6 +23,7 @@ const UtilBtn = () => {
   useEffect(() => {
     dispatch(modeChoice(mode));
   }, [mode]);
+
   return (
     <div className="controls">
       <div className="controls__range">
@@ -32,7 +38,9 @@ const UtilBtn = () => {
         >
           {mode}
         </button>
-        <button id="jsSave">Save</button>
+        <a href={url} download="canvas.png" id="jsSave">
+          Save
+        </a>
         <button
           id="jsReset"
           onClick={() => {
