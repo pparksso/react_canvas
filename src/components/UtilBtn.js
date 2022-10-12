@@ -21,7 +21,7 @@ const UtilBtn = () => {
     return mode;
   };
 
-  // 바뀐 함수 값 redux로 보내기(useState가 비동기로 작동해 mode가 비뀌고 나서 전송되게 하기위해 useEffect 사용)
+  // 바뀐 함수 값 redux로 보내기
   useEffect(() => {
     dispatch(modeChoice(mode));
   }, [mode, dispatch]);
